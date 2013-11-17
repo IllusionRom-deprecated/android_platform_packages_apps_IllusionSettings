@@ -4,4 +4,9 @@
       android:fragment="org.illusion.settings.fragments.GeneralUI"
       android:title="@string/title_generalui"
       android:icon="@drawable/ic_settings_generalui" />
+    <header
+      android:id="@+id/ButtonSettings"
+      android:fragment="org.illusion.settings.fragments.ButtonSettings"
+      android:title="@string/button_settings"
+      android:icon="@drawable/ic_settings_button" />
 </preference-headers>

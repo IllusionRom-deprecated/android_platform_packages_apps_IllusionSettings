@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string-array name="ad_redisplay_entries" translatable="false">
+        <item>@string/ad_redisplay_never</item>
+        <item>@string/ad_redisplay_1m</item>
+        <item>@string/ad_redisplay_5m</item>
+        <item>@string/ad_redisplay_15m</item>
+        <item>@string/ad_redisplay_30m</item>
+        <item>@string/ad_redisplay_1h</item>
+        <item>@string/ad_redisplay_2h</item>
+        <item>@string/ad_redisplay_5h</item>
+    </string-array>
+
+    <string-array name="ad_redisplay_values" translatable="false">
+        <item>0</item>
+        <item>60000</item>
+        <item>300000</item>
+        <item>900000</item>
+        <item>1800000</item>
+        <item>3600000</item>
+        <item>7200000</item>
+        <item>18000000</item>
+    </string-array>
+
+    <string-array name="ad_pocket_mode_entries" translatable="false">
+        <item>@string/ad_pocket_mode_off</item>
+        <item>@string/ad_pocket_mode_notifications</item>
+        <item>@string/ad_pocket_mode_always</item>
+    </string-array>
+
+    <string-array name="ad_pocket_mode_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
+    <string-array name="keys_action_entries" translatable="false">
+        <item>@string/keys_action_nothing</item>
+        <item>@string/keys_action_home</item>
+        <item>@string/keys_action_back</item>
+        <item>@string/keys_action_menu</item>
+        <item>@string/keys_action_app_switch</item>
+        <item>@string/keys_action_search</item>
+        <item>@string/keys_action_voice_search</item>
+        <item>@string/keys_action_in_app_search</item>
+        <item>@string/keys_action_last_app</item>
+        <item>@string/keys_action_kill_app</item>
+    </string-array>
+
+    <string-array name="keys_action_values" translatable="false">
+        <item>0</item>
+        <item>6</item>
+        <item>7</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+</resources>
