@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -25,7 +26,6 @@ import android.preference.PreferenceDrawerActivity;
 import android.preference.PreferenceFragment;
 import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.IWindowManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -79,8 +79,34 @@ public class SettingsActivity extends PreferenceDrawerActivity implements Button
         }
 
         ActionBar actionBar = getActionBar();
-        BitmapDrawable background = new BitmapDrawable(BitmapFactory
-                .decodeResource(getResources(), R.drawable.ab_background));
+        Random generator = new Random();
+        int backgroundNumber = generator.nextInt(5);
+        BitmapDrawable background;
+        switch (backgroundNumber) {
+            case 0:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background));
+                break;
+            case 1:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background1));
+                break;
+            case 2:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background2));
+                break;
+            case 3:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background3));
+                break;
+            case 4:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background4));
+                break;
+            default:
+                background = new BitmapDrawable(BitmapFactory
+                        .decodeResource(getResources(), R.drawable.ab_background));
+        }
         background.setTileModeX(Shader.TileMode.CLAMP);
         actionBar.setBackgroundDrawable(background);
         actionBar.setDisplayHomeAsUpEnabled(true);
