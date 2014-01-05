@@ -96,7 +96,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mQuickSettingsDynamic.setOnPreferenceChangeListener(this);
 
          try {
-             if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
+             if (Settings.System.getInt(resolver,
                     Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
                  mStatusBarBrightnessControl.setEnabled(false);
                  mStatusBarBrightnessControl.setSummary(R.string.status_bar_toggle_info);
@@ -104,7 +104,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
          } catch (SettingNotFoundException e) {
         }
         mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
-        mStatusBarTraffic.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
+        int intState = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_TRAFFIC, 0);
+	 intState = setStatusBarTrafficSummary(intState);
+        mStatusBarTraffic.setChecked(intState > 0);
         mStatusBarTraffic.setOnPreferenceChangeListener(this);
 
         mStatusBarCustomHeader = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_CUSTOM_HEADER);
@@ -120,6 +122,8 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         return true;
     }
+
+    @Override
     public boolean onPreferenceChange(Preference preference, Object objValue) {
         ContentResolver resolver = getActivity().getContentResolver();
 		if (preference == mStatusBarBrightnessControl) {
@@ -138,8 +142,13 @@ public class BarsSettings extends SettingsPreferenceFragment implements
              		Settings.System.putInt(resolver, Settings.System.QS_SMART_PULLDOWN, smartPulldown);
   		       updateSmartPulldownSummary(smartPulldown);
 		} else if (preference == mStatusBarTraffic) {
-            	      boolean value = (Boolean) objValue;
-            	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
+    		   // Increment the state and then update the label
+
+		      int intState = Settings.System.getInt(resolver, Settings.System.STATUS_BAR_TRAFFIC, 0);
+		      intState++;
+		      intState = setStatusBarTrafficSummary(intState);
+    		      Settings.System.putInt(resolver, Settings.System.STATUS_BAR_TRAFFIC, intState);
+		      if (intState > 1) {return false;}
 		} else if (preference == mStatusBarCustomHeader) {
             	      boolean value = (Boolean) objValue;
 	             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
@@ -192,5 +201,18 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
     public static boolean isPhone(Context con) {
         return getScreenType(con) == DEVICE_PHONE;
+    }
+
+   private int setStatusBarTrafficSummary(int intState) {
+        // These states must match com.android.systemui.statusbar.policy.Traffic 
+        if (intState == 1) {
+            mStatusBarTraffic.setSummary(R.string.show_network_speed_bits);	
+        } else if (intState == 2) {
+            mStatusBarTraffic.setSummary(R.string.show_network_speed_bytes);
+        } else {
+            mStatusBarTraffic.setSummary(R.string.show_network_speed_summary);
+            return 0;
+        }
+        return intState;	
     }
 }
