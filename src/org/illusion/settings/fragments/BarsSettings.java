@@ -43,14 +43,15 @@ import org.illusion.settings.Utils;
 public class BarsSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "BarsSettings";
-    
+
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String QUICK_PULLDOWN = "quick_pulldown";
     private static final String QUICKSETTINGS_DYNAMIC = "quicksettings_dynamic_row";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
     private static final String SMART_PULLDOWN = "smart_pulldown";
-    
+    private static final String DOUBLE_TAP_TO_SLEEP = "double_tap_to_sleep";
+
     // Device types
     private static final int DEVICE_PHONE  = 0;
     private static final int DEVICE_HYBRID = 1;
@@ -62,7 +63,8 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarCustomHeader;
     private CheckBoxPreference mQuickSettingsDynamic;
-    
+    private CheckBoxPreference mDoubleTapGesture;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +110,12 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarCustomHeader = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_CUSTOM_HEADER);
         mStatusBarCustomHeader.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
         mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
+
+	mDoubleTapGesture = (CheckBoxPreference) prefSet.findPreference(DOUBLE_TAP_TO_SLEEP);
+        mDoubleTapGesture.setChecked(Settings.System.getInt(resolver,Settings.System.DOUBLE_TAP_TO_SLEEP, 0) == 1);
+        mDoubleTapGesture.setOnPreferenceChangeListener(this);
 	}
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         return true;
@@ -118,24 +125,27 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 		if (preference == mStatusBarBrightnessControl) {
       		      boolean value = (Boolean) objValue;
         	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
-		} else if (preference == mQuickPulldown) {	
-		      int quickPulldown = Integer.valueOf((String) objValue);	
+		} else if (preference == mQuickPulldown) {
+		      int quickPulldown = Integer.valueOf((String) objValue);
                     Settings.System.putInt(resolver,Settings.System.QS_QUICK_PULLDOWN, quickPulldown);
 			updateQuickPulldownSummary(quickPulldown);
-              } else if (preference == mQuickSettingsDynamic) {
+		} else if (preference == mQuickSettingsDynamic) {
  	              boolean value = (Boolean) objValue;
                      Settings.System.putInt(resolver,
                      Settings.System.QUICK_SETTINGS_TILES_ROW, value ? 1 : 0);
-              } else if (preference == mSmartPulldown) {
+		} else if (preference == mSmartPulldown) {
              		int smartPulldown = Integer.valueOf((String) objValue);
              		Settings.System.putInt(resolver, Settings.System.QS_SMART_PULLDOWN, smartPulldown);
   		       updateSmartPulldownSummary(smartPulldown);
-              } else if (preference == mStatusBarTraffic) {
+		} else if (preference == mStatusBarTraffic) {
             	      boolean value = (Boolean) objValue;
             	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
-	       } else if (preference == mStatusBarCustomHeader) {
+		} else if (preference == mStatusBarCustomHeader) {
             	      boolean value = (Boolean) objValue;
 	             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
+		} else if (preference == mDoubleTapGesture) {
+		      boolean value = (Boolean) objValue;
+		      Settings.System.putInt(resolver,Settings.System.DOUBLE_TAP_TO_SLEEP, value ? 1 : 0);
 		}
 	  else {
             return false;
