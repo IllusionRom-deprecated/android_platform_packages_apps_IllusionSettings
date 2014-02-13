@@ -10,6 +10,7 @@
     <string name="title_clipboard_share">Copy to clipboard</string>
 
     <!-- Status Bar -->
+    <string name="bars_settings">Bars Settings</string>
     <string name="bars_and_menus_settings">Bars and menus</string>
     <string name="bars_and_menus_category_status_bar_title">Status Bar</string>
     <string name="status_bar_toggle_brightness">Brightness Control</string>

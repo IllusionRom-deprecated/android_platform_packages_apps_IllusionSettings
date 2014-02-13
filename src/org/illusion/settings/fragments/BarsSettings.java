@@ -16,10 +16,7 @@
  *
  */
 
-package org.omnirom.omnigears.interfacesettings;
-
-import com.android.settings.SettingsPreferenceFragment;
-import com.android.settings.R;
+package org.illusion.settings.fragments;
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -38,21 +35,16 @@ import android.util.Log;
 import android.view.DisplayInfo;
 import android.view.WindowManager;
 import android.view.WindowManagerGlobal;
+import org.illusion.settings.R;
+import org.illusion.settings.SettingsPreferenceFragment;
+import org.illusion.settings.Utils;
+
 
 public class BarsSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "BarsSettings";
 
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-    private static final String STATUS_BAR_NOTIF_COUNT = "status_bar_notif_count";
-    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
-    private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
-    private static final String QUICK_PULLDOWN = "quick_pulldown";
-    private static final String SMART_PULLDOWN = "smart_pulldown";
-    private static final String QUICKSETTINGS_DYNAMIC = "quicksettings_dynamic_row";
-    private static final String CATEGORY_NAVBAR = "category_navigation_bar";
-    private static final String SOFT_BACK_KILL_APP = "soft_back_kill_app";
-    private static final String EMULATE_MENU_KEY = "emulate_menu_key";
 
     // Device types
     private static final int DEVICE_PHONE  = 0;

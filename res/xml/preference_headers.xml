@@ -9,4 +9,10 @@
       android:fragment="org.illusion.settings.fragments.ButtonSettings"
       android:title="@string/button_settings"
       android:icon="@drawable/ic_settings_button" />
+    <header
+      android:id="@+id/BarsSettings"
+      android:fragment="org.illusion.settings.fragments.BarsSettings"
+      android:title="@string/bars_settings"
+      android:icon="@drawable/ic_settings_button" />
+
 </preference-headers>
