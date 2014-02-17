@@ -53,4 +53,7 @@
     <string name="keys_action_double">Double tap</string>
     <string name="dialog_no_home_key_title">No home action</string>
     <string name="no_home_key">You have no button assigned to the \"Home\" action! This can make your device unusable!</string>
+    <string name="button_headsethook_title">Headset</string>
+    <string name="button_headsethook_launch_voice_title">Headset launches voice</string>
+    <string name="button_headsethook_launch_voice_summary">Pressing the headset button will launch voice controls</string>
 </resources>
