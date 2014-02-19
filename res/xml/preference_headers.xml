@@ -13,6 +13,6 @@
       android:id="@+id/BarsSettings"
       android:fragment="org.illusion.settings.fragments.BarsSettings"
       android:title="@string/bars_settings"
-      android:icon="@drawable/ic_settings_button" />
+      android:icon="@drawable/ic_bars" />
 
 </preference-headers>

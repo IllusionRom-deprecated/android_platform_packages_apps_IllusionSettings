@@ -30,7 +30,7 @@
                 android:title="@string/status_bar_toggle_brightness"
                 android:summary="@string/status_bar_toggle_brightness_summary"
                 android:persistent="false"/>
-	<CheckBoxPreference
+	 <CheckBoxPreference
             android:key="status_bar_qs_quick_pulldown"
             android:title="@string/qs_quick_pulldown_title"
             android:summary="@string/qs_quick_pulldown_summary"
