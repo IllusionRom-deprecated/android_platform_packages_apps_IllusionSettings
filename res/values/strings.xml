@@ -56,4 +56,9 @@
     <string name="button_headsethook_title">Headset</string>
     <string name="button_headsethook_launch_voice_title">Headset launches voice</string>
     <string name="button_headsethook_launch_voice_summary">Pressing the headset button will launch voice controls</string>
+
+    <!-- Status Bar QS Quick pulldown -->   
+    <string name="qs_quick_pulldown_title">Quick Settings pulldown</string>
+    <string name="qs_quick_pulldown_summary">Access Quick Settings by pulling down on the right side of the status bar</string>
+
 </resources>

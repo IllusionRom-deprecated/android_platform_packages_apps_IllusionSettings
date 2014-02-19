@@ -43,15 +43,18 @@ import org.illusion.settings.Utils;
 public class BarsSettings extends SettingsPreferenceFragment implements
         Preference.OnPreferenceChangeListener {
     private static final String TAG = "BarsSettings";
-
+    
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-
+    private static final String STATUS_BAR_QS_QUICK_PULLDOWN = "status_bar_qs_quick_pulldown";
+    
     // Device types
     private static final int DEVICE_PHONE  = 0;
     private static final int DEVICE_HYBRID = 1;
     private static final int DEVICE_TABLET = 2;
 
     private CheckBoxPreference mStatusBarBrightnessControl;
+    private CheckBoxPreference mStatusBarQsPulldown;
+
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
              }
          } catch (SettingNotFoundException e) {
         }
+ 	 mStatusBarQsPulldown = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QS_QUICK_PULLDOWN);
+        mStatusBarQsPulldown.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, 0) == 1);
+        mStatusBarQsPulldown.setOnPreferenceChangeListener(this);
 	}
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -82,6 +88,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 		if (preference == mStatusBarBrightnessControl) {
       		      boolean value = (Boolean) objValue;
         	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
+		} else if (preference == mStatusBarQsPulldown) {	
+		      boolean value = (Boolean) objValue;	
+                    Settings.System.putInt(resolver,
+                    Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, value ? 1 : 0);
 		}
 		else {
             return false;
