@@ -59,7 +59,8 @@
     <string name="button_headsethook_title">Headset</string>
     <string name="button_headsethook_launch_voice_title">Headset launches voice</string>
     <string name="button_headsethook_launch_voice_summary">Pressing the headset button will launch voice controls</string>
-
+    <string name="virtual_key_haptic_feedback_title">Vibrate on touch</string>
+    <string name="virtual_key_haptic_feedback_summary">Enable depends on \"Vibrate on touch\" in sound settings</string>
 
     <!-- Status Bar QS Quick pulldown -->   
     <string name="qs_quick_pulldown_title">Quick Settings pulldown</string>

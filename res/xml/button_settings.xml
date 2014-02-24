@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  Copyright (C) 2013 The OmniROM Project
+<!--  Copyright (C) 2014 IllusionRoms
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -124,7 +124,13 @@
 
     <PreferenceCategory
         android:key="button_keys_assist"
-        android:title="@string/button_keys_assist_title">        
+        android:title="@string/button_keys_assist_title">
+
+        <CheckBoxPreference
+            android:key="virtual_key_haptic_feedback"
+            android:title="@string/virtual_key_haptic_feedback_title"
+            android:summary="@string/virtual_key_haptic_feedback_summary"
+            android:persistent="false"/>
 
         <ListPreference
             android:key="keys_assist_press"

@@ -32,9 +32,12 @@
  */
 package org.illusion.settings.fragments;
 
+import java.util.prefs.PreferenceChangeListener;
 import android.content.ContentResolver;
 import android.content.res.Resources;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
@@ -79,6 +82,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private static final String KEYS_ASSIST_LONG_PRESS = "keys_assist_long_press";
     private static final String KEYS_APP_SWITCH_PRESS = "keys_app_switch_press";
     private static final String KEYS_APP_SWITCH_LONG_PRESS = "keys_app_switch_long_press";
+    private static final String VIRTUAL_KEY_HAPTIC_FEEDBACK = "virtual_key_haptic_feedback";
 
     // Available custom actions to perform on a key press.
     private static final int ACTION_NOTHING = 0;
@@ -114,6 +118,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
     private CheckBoxPreference mHeadsetHookLaunchVoice;
+    private CheckBoxPreference mVirtualKeyHapticFeedback;
     private Map<String, Integer> mKeySettings = new HashMap<String, Integer>();
 
     @Override
@@ -122,7 +127,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
 
         addPreferencesFromResource(R.xml.button_settings);
 
-        final ContentResolver resolver = getActivity().getContentResolver();
+        final ContentResolver resolver = getContentResolver();
         final PreferenceScreen prefScreen = getPreferenceScreen();
         final Resources res = getResources();
 
@@ -146,7 +151,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
         final PreferenceCategory keysAppSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-	final PreferenceCategory headsethookCategory = 
+	 final PreferenceCategory headsethookCategory = 
 		  (PreferenceCategory) prefScreen.findPreference(CATEGORY_HEADSETHOOK);
 
 
@@ -182,9 +187,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                     KEYS_APP_SWITCH_PRESS);
             mAppSwitchLongPressAction = (ListPreference) prefScreen.findPreference(
                     KEYS_APP_SWITCH_LONG_PRESS);
+            mVirtualKeyHapticFeedback = (CheckBoxPreference) prefScreen.findPreference(
+                    VIRTUAL_KEY_HAPTIC_FEEDBACK);
 
             if (hasBackKey) {
-                int backPressAction = Settings.System.getInt(getContentResolver(),
+                int backPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_BACK_ACTION, ACTION_BACK);
 
                 mBackPressAction.setValue(Integer.toString(backPressAction));
@@ -193,7 +200,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
 
                 mKeySettings.put(Settings.System.KEY_BACK_ACTION, backPressAction);
 
-                int backLongPressAction = Settings.System.getInt(getContentResolver(),
+                int backLongPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_BACK_LONG_PRESS_ACTION, ACTION_NOTHING);
 
                 mBackLongPressAction.setValue(Integer.toString(backLongPressAction));
@@ -206,7 +213,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             }
 
             if (hasHomeKey) {
-                int homePressAction = Settings.System.getInt(getContentResolver(),
+                int homePressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_HOME_ACTION, ACTION_HOME);
 
                 mHomePressAction.setValue(Integer.toString(homePressAction));
@@ -228,11 +235,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 }
 
                 if (hasAppSwitchKey) {
-                    homeLongPressAction = Settings.System.getInt(getContentResolver(),
+                    homeLongPressAction = Settings.System.getInt(resolver,
                             Settings.System.KEY_HOME_LONG_PRESS_ACTION, ACTION_NOTHING);
                 } else {
                     int defaultAction = ACTION_NOTHING;
-                    homeLongPressAction = Settings.System.getInt(getContentResolver(),
+                    homeLongPressAction = Settings.System.getInt(resolver,
                             Settings.System.KEY_HOME_LONG_PRESS_ACTION, longPressOnHomeBehavior);
                 }
                 mHomeLongPressAction.setValue(Integer.toString(homeLongPressAction));
@@ -244,7 +251,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 int doubleTapOnHomeBehavior = getResources().getInteger(
                         com.android.internal.R.integer.config_doubleTapOnHomeBehavior);
 
-                int homeDoubleTapAction = Settings.System.getInt(getContentResolver(),
+                int homeDoubleTapAction = Settings.System.getInt(resolver,
                             Settings.System.KEY_HOME_DOUBLE_TAP_ACTION,
                             doubleTapOnHomeBehavior == 1 ? ACTION_APP_SWITCH : ACTION_NOTHING);
 
@@ -258,7 +265,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             }
 
             if (hasMenuKey) {
-                int menuPressAction = Settings.System.getInt(getContentResolver(),
+                int menuPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_MENU_ACTION, ACTION_MENU);
                 mMenuPressAction.setValue(Integer.toString(menuPressAction));
                 mMenuPressAction.setSummary(mMenuPressAction.getEntry());
@@ -271,7 +278,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                     menuLongPressAction = ACTION_SEARCH;
                 }
 
-                menuLongPressAction = Settings.System.getInt(getContentResolver(),
+                menuLongPressAction = Settings.System.getInt(resolver,
                             Settings.System.KEY_MENU_LONG_PRESS_ACTION, menuLongPressAction);
 
                 mMenuLongPressAction.setValue(Integer.toString(menuLongPressAction));
@@ -284,7 +291,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             }
 
             if (hasAssistKey) {
-                int assistPressAction = Settings.System.getInt(getContentResolver(),
+                int assistPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_ASSIST_ACTION, ACTION_SEARCH);
                 mAssistPressAction.setValue(Integer.toString(assistPressAction));
                 mAssistPressAction.setSummary(mAssistPressAction.getEntry());
@@ -292,7 +299,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
 
                 mKeySettings.put(Settings.System.KEY_ASSIST_ACTION, assistPressAction);
 
-                int assistLongPressAction = Settings.System.getInt(getContentResolver(),
+                int assistLongPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_ASSIST_LONG_PRESS_ACTION, ACTION_VOICE_SEARCH);
                 mAssistLongPressAction.setValue(Integer.toString(assistLongPressAction));
                 mAssistLongPressAction.setSummary(mAssistLongPressAction.getEntry());
@@ -304,7 +311,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             }
 
             if (hasAppSwitchKey) {
-                int appSwitchPressAction = Settings.System.getInt(getContentResolver(),
+                int appSwitchPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_APP_SWITCH_ACTION, ACTION_APP_SWITCH);
                 mAppSwitchPressAction.setValue(Integer.toString(appSwitchPressAction));
                 mAppSwitchPressAction.setSummary(mAppSwitchPressAction.getEntry());
@@ -312,7 +319,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
 
                 mKeySettings.put(Settings.System.KEY_APP_SWITCH_ACTION, appSwitchPressAction);
 
-                int appSwitchLongPressAction = Settings.System.getInt(getContentResolver(),
+                int appSwitchLongPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, ACTION_NOTHING);
                 mAppSwitchLongPressAction.setValue(Integer.toString(appSwitchLongPressAction));
                 mAppSwitchLongPressAction.setSummary(mAppSwitchLongPressAction.getEntry());
@@ -323,10 +330,18 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 prefScreen.removePreference(keysAppSwitchCategory);
             }
 
-            mEnableCustomBindings.setChecked((Settings.System.getInt(getActivity().
-                    getApplicationContext().getContentResolver(),
-                    Settings.System.HARDWARE_KEY_REBINDING, 0) == 1));
+            mEnableCustomBindings.setChecked((Settings.System.getInt(resolver,
+                  Settings.System.HARDWARE_KEY_REBINDING, 0) == 1));
 		    mEnableCustomBindings.setOnPreferenceChangeListener(this);
+
+            Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);	
+            if (vibrator == null || !vibrator.hasVibrator()) {
+	     mVirtualKeyHapticFeedback.setChecked(Settings.System.getInt(resolver,
+                        Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, 1) == 0);
+            } else {
+                mVirtualKeyHapticFeedback.setChecked(Settings.System.getInt(resolver,
+                        Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, 1) == 1);
+            }
         }
       	     mHeadsetHookLaunchVoice = (CheckBoxPreference) findPreference(BUTTON_HEADSETHOOK_LAUNCH_VOICE);
             mHeadsetHookLaunchVoice.setChecked(Settings.System.getInt(resolver,Settings.System.HEADSETHOOK_LAUNCH_VOICE, 1) == 1);
@@ -339,6 +354,11 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             Settings.System.putInt(getContentResolver(),
                     Settings.System.HEADSETHOOK_LAUNCH_VOICE, checked ? 1:0);
    	     return true;
+        } else if (preference == mVirtualKeyHapticFeedback){
+            boolean checked = ((CheckBoxPreference)preference).isChecked();
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, checked ? 1:0);		
+            return true;
         }
         return super.onPreferenceTreeClick(preferenceScreen, preference);
     }
