@@ -35,5 +35,9 @@
             android:title="@string/qs_quick_pulldown_title"
             android:summary="@string/qs_quick_pulldown_summary"
             android:persistent="false" />
-
+	 <CheckBoxPreference
+            android:key="status_bar_traffic"
+            android:title="@string/show_network_speed"
+            android:summary="@string/show_network_speed_summary"
+            android:defaultValue="false" />
 </PreferenceScreen>

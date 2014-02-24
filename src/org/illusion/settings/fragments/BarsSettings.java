@@ -46,6 +46,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_QS_QUICK_PULLDOWN = "status_bar_qs_quick_pulldown";
+    private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     
     // Device types
     private static final int DEVICE_PHONE  = 0;
@@ -54,7 +55,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarQsPulldown;
-
+    private CheckBoxPreference mStatusBarTraffic;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
  	 mStatusBarQsPulldown = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QS_QUICK_PULLDOWN);
         mStatusBarQsPulldown.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, 0) == 1);
         mStatusBarQsPulldown.setOnPreferenceChangeListener(this);
+        mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
+        mStatusBarTraffic.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
+        mStatusBarTraffic.setOnPreferenceChangeListener(this);
 	}
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -90,10 +94,12 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
 		} else if (preference == mStatusBarQsPulldown) {	
 		      boolean value = (Boolean) objValue;	
-                    Settings.System.putInt(resolver,
-                    Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, value ? 1 : 0);
+                    Settings.System.putInt(resolver,Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, value ? 1 : 0);
+              } else if (preference == mStatusBarTraffic) {
+            	      boolean value = (Boolean) objValue;
+            	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
 		}
-		else {
+	  else {
             return false;
 	       }
 	return true;
