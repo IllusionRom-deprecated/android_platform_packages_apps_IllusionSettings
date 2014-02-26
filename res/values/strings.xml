@@ -16,9 +16,11 @@
     <string name="status_bar_toggle_brightness">Brightness Control</string>
     <string name="status_bar_toggle_brightness_summary">Adjust brightness by sliding across status bar</string>
     <string name="status_bar_toggle_info">Automatic brightness is enabled</string>
+
     <!-- Network speed -->
     <string name="show_network_speed">Network speed indicator</string>
     <string name="show_network_speed_summary">Show network speed in statusbar</string>
+
     <!-- Hardware keys -->
     <string name="button_settings">Button Settings</string>
     <string name="button_keys_title">Keys</string>
@@ -65,5 +67,9 @@
     <!-- Status Bar QS Quick pulldown -->   
     <string name="qs_quick_pulldown_title">Quick Settings pulldown</string>
     <string name="qs_quick_pulldown_summary">Access Quick Settings by pulling down on the right side of the status bar</string>
+
+    <string name="notification_drawer_category_title">Notification drawer</string>
+    <string name="custom_statusbar_header_title">Contextual notification panel header</string>
+    <string name="custom_statusbar_header_summary">Sets the background of the notification panel header to an image based on the current date and time</string>
 
 </resources>

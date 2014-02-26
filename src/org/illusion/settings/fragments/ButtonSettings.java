@@ -189,11 +189,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                     KEYS_APP_SWITCH_LONG_PRESS);
             mVirtualKeyHapticFeedback = (CheckBoxPreference) prefScreen.findPreference(
                     VIRTUAL_KEY_HAPTIC_FEEDBACK);
-
             if (hasBackKey) {
                 int backPressAction = Settings.System.getInt(resolver,
                         Settings.System.KEY_BACK_ACTION, ACTION_BACK);
-
                 mBackPressAction.setValue(Integer.toString(backPressAction));
                 mBackPressAction.setSummary(mBackPressAction.getEntry());
                 mBackPressAction.setOnPreferenceChangeListener(this);
@@ -337,7 +335,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);	
             if (vibrator == null || !vibrator.hasVibrator()) {
 	     mVirtualKeyHapticFeedback.setChecked(Settings.System.getInt(resolver,
-                        Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, 1) == 0);
+                        Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, 1) == 1);
             } else {
                 mVirtualKeyHapticFeedback.setChecked(Settings.System.getInt(resolver,
                         Settings.System.VIRTUAL_KEYS_HAPTIC_FEEDBACK, 1) == 1);
