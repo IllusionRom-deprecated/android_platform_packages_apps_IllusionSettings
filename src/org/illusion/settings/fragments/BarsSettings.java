@@ -47,6 +47,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String STATUS_BAR_QS_QUICK_PULLDOWN = "status_bar_qs_quick_pulldown";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
+    private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
     
     // Device types
     private static final int DEVICE_PHONE  = 0;
@@ -56,6 +57,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarQsPulldown;
     private CheckBoxPreference mStatusBarTraffic;
+    private CheckBoxPreference mStatusBarCustomHeader;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +84,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
         mStatusBarTraffic.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
         mStatusBarTraffic.setOnPreferenceChangeListener(this);
+
+        mStatusBarCustomHeader = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_CUSTOM_HEADER);
+        mStatusBarCustomHeader.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_CUSTOM_HEADER, 0) == 1);
+        mStatusBarCustomHeader.setOnPreferenceChangeListener(this);
 	}
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -98,6 +104,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
               } else if (preference == mStatusBarTraffic) {
             	      boolean value = (Boolean) objValue;
             	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
+	       } else if (preference == mStatusBarCustomHeader) {
+            	      boolean value = (Boolean) objValue;
+	             Settings.System.putInt(resolver,Settings.System.STATUS_BAR_CUSTOM_HEADER, value ? 1 : 0);
 		}
 	  else {
             return false;

@@ -186,7 +186,6 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             if (hasBackKey) {
                 int backPressAction = Settings.System.getInt(getContentResolver(),
                         Settings.System.KEY_BACK_ACTION, ACTION_BACK);
-
                 mBackPressAction.setValue(Integer.toString(backPressAction));
                 mBackPressAction.setSummary(mBackPressAction.getEntry());
                 mBackPressAction.setOnPreferenceChangeListener(this);
