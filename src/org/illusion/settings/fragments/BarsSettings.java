@@ -45,7 +45,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String TAG = "BarsSettings";
     
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-    private static final String STATUS_BAR_QS_QUICK_PULLDOWN = "status_bar_qs_quick_pulldown";
+    private static final String QUICK_PULLDOWN = "quick_pulldown";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
     
@@ -55,7 +55,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final int DEVICE_TABLET = 2;
 
     private CheckBoxPreference mStatusBarBrightnessControl;
-    private CheckBoxPreference mStatusBarQsPulldown;
+    private ListPreference mQuickPulldown;
     private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarCustomHeader;
     
@@ -69,7 +69,11 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 	 mStatusBarBrightnessControl = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_BRIGHTNESS_CONTROL);
         mStatusBarBrightnessControl.setChecked((Settings.System.getInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1));
         mStatusBarBrightnessControl.setOnPreferenceChangeListener(this);
- 
+        mQuickPulldown = (ListPreference) findPreference(QUICK_PULLDOWN);
+        mQuickPulldown.setOnPreferenceChangeListener(this);
+        int statusQuickPulldown = Settings.System.getInt(resolver,Settings.System.QS_QUICK_PULLDOWN, 0);
+        mQuickPulldown.setValue(String.valueOf(statusQuickPulldown));
+
          try {
              if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
                     Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC) {
@@ -78,9 +82,6 @@ public class BarsSettings extends SettingsPreferenceFragment implements
              }
          } catch (SettingNotFoundException e) {
         }
- 	 mStatusBarQsPulldown = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_QS_QUICK_PULLDOWN);
-        mStatusBarQsPulldown.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, 0) == 1);
-        mStatusBarQsPulldown.setOnPreferenceChangeListener(this);
         mStatusBarTraffic = (CheckBoxPreference) prefSet.findPreference(STATUS_BAR_TRAFFIC);
         mStatusBarTraffic.setChecked(Settings.System.getInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, 0) == 1);
         mStatusBarTraffic.setOnPreferenceChangeListener(this);
@@ -98,9 +99,9 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 		if (preference == mStatusBarBrightnessControl) {
       		      boolean value = (Boolean) objValue;
         	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, value ? 1 : 0);
-		} else if (preference == mStatusBarQsPulldown) {	
-		      boolean value = (Boolean) objValue;	
-                    Settings.System.putInt(resolver,Settings.System.STATUS_BAR_QS_QUICK_PULLDOWN, value ? 1 : 0);
+		} else if (preference == mQuickPulldown) {	
+		      int statusQuickPulldown = Integer.valueOf((String) objValue);	
+                    Settings.System.putInt(resolver,Settings.System.QS_QUICK_PULLDOWN, statusQuickPulldown);
               } else if (preference == mStatusBarTraffic) {
             	      boolean value = (Boolean) objValue;
             	      Settings.System.putInt(resolver,Settings.System.STATUS_BAR_TRAFFIC, value ? 1 : 0);
