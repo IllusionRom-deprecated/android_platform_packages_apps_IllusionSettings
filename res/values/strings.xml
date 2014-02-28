@@ -64,9 +64,13 @@
     <string name="virtual_key_haptic_feedback_title">Vibrate on touch</string>
     <string name="virtual_key_haptic_feedback_summary">Enable depends on \"Vibrate on touch\" in sound settings</string>
 
-    <!-- Status Bar QS Quick pulldown -->   
-    <string name="qs_quick_pulldown_title">Quick Settings pulldown</string>
-    <string name="qs_quick_pulldown_summary">Access Quick Settings by pulling down on the right side of the status bar</string>
+    <!-- QuickSettings: Quick Pulldown -->
+    <string name="title_quick_pulldown">Quick pulldown</string>
+    <string name="summary_quick_pulldown">Quickly pulldown quicksettings with one finger</string>
+    <string name="quick_pulldown_off">Off</string>
+    <string name="quick_pulldown_centre">Centre</string>
+    <string name="quick_pulldown_left">Left</string>
+    <string name="quick_pulldown_right">Right</string>
 
     <string name="notification_drawer_category_title">Notification drawer</string>
     <string name="custom_statusbar_header_title">Contextual notification panel header</string>
