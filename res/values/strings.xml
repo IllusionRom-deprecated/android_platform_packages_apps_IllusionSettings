@@ -75,4 +75,12 @@
     <string name="custom_statusbar_header_title">Contextual notification panel header</string>
     <string name="custom_statusbar_header_summary">Sets the background of the notification panel header to an image based on the current date and time</string>
 
+    <!-- QuickSettings: Smart Pulldown -->
+    <string name="smart_pulldown_title">Smart pulldown</string>
+    <string name="smart_pulldown_summary">Open Quick Settings when there are no notifications present</string>
+    <string name="smart_pulldown_off">Off</string>
+    <string name="smart_pulldown_dismissable">Pulldown if there are no cleareable notifications</string>
+    <string name="smart_pulldown_persistent">Pulldown if there are no notifications</string>
+
+
 </resources>

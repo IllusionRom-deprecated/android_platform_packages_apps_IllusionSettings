@@ -46,7 +46,16 @@
             android:summary="@string/show_network_speed_summary"
             android:defaultValue="false" />
 
+        <ListPreference
+                android:key="smart_pulldown"
+                android:title="@string/smart_pulldown_title"
+                android:summary="@string/smart_pulldown_summary"
+                android:entries="@array/smart_pulldown_entries"
+                android:entryValues="@array/smart_pulldown_values"
+                android:persistent="false" />
+
     <!-- Notification drawer -->	
+
     <PreferenceCategory
             android:key="category_notification_drawer"
             android:title="@string/notification_drawer_category_title"/>
