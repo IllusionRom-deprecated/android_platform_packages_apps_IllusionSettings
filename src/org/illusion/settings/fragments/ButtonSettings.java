@@ -79,6 +79,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private static final String KEYS_ASSIST_LONG_PRESS = "keys_assist_long_press";
     private static final String KEYS_APP_SWITCH_PRESS = "keys_app_switch_press";
     private static final String KEYS_APP_SWITCH_LONG_PRESS = "keys_app_switch_long_press";
+    private static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
 
     // Available custom actions to perform on a key press.
     private static final int ACTION_NOTHING = 0;
@@ -113,7 +114,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
     private ListPreference mAssistLongPressAction;
     private ListPreference mAppSwitchPressAction;
     private ListPreference mAppSwitchLongPressAction;
+    private ListPreference mVolumeKeyCursorControl;
     private CheckBoxPreference mHeadsetHookLaunchVoice;
+
     private Map<String, Integer> mKeySettings = new HashMap<String, Integer>();
 
     @Override
@@ -329,6 +332,13 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
         }
       	     mHeadsetHookLaunchVoice = (CheckBoxPreference) findPreference(BUTTON_HEADSETHOOK_LAUNCH_VOICE);
             mHeadsetHookLaunchVoice.setChecked(Settings.System.getInt(resolver,Settings.System.HEADSETHOOK_LAUNCH_VOICE, 1) == 1);
+
+	     mVolumeKeyCursorControl = (ListPreference) findPreference(VOLUME_KEY_CURSOR_CONTROL);
+             if(mVolumeKeyCursorControl != null) {
+                 mVolumeKeyCursorControl.setValue(Integer.toString(Settings.System.getInt(resolver, Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0)));
+                 mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntry());
+                 mVolumeKeyCursorControl.setOnPreferenceChangeListener(this);
+             }
     }
 
     @Override
@@ -459,10 +469,18 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
             mKeySettings.put(Settings.System.KEY_APP_SWITCH_LONG_PRESS_ACTION, value);
             checkForHomeKey();
             return true;
-        }
+        } else if (preference == mVolumeKeyCursorControl) {
+             String volumeKeyCursorControl = (String) newValue;
+             int val = Integer.parseInt(volumeKeyCursorControl);
+             Settings.System.putInt(getContentResolver(),
+                    Settings.System.VOLUME_KEY_CURSOR_CONTROL, val);
+             int index = mVolumeKeyCursorControl.findIndexOfValue(volumeKeyCursorControl);
+             mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntries()[index]);
+             return true;
+	}
         return false;
     }
-    
+   
     private boolean hasHomeKey() {
         Iterator<Integer> nextAction = mKeySettings.values().iterator();
         while (nextAction.hasNext()){

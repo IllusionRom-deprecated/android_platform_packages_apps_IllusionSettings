@@ -22,6 +22,7 @@
     <string name="show_network_speed_summary">Show network speed in statusbar</string>
 
     <!-- Hardware keys -->
+    <string name="button_volume_keys_title">Volume</string>
     <string name="button_settings">Button Settings</string>
     <string name="button_keys_title">Keys</string>
     <string name="keys_bindings_title">Key actions</string>
@@ -82,5 +83,10 @@
     <string name="smart_pulldown_dismissable">Pulldown if there are no cleareable notifications</string>
     <string name="smart_pulldown_persistent">Pulldown if there are no notifications</string>
 
+    <!-- Cursor control -->
+   <string name="volume_key_cursor_control_title">Cursor control</string>
+   <string name="volume_key_cursor_control_on">Left/right</string>
+   <string name="volume_key_cursor_control_on_reverse">Right/left</string>
+   <string name="disabled">Disabled</string>
 
 </resources>
