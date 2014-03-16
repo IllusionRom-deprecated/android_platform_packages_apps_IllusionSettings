@@ -32,8 +32,11 @@
  */
 package org.illusion.settings.fragments;
 
+import java.util.prefs.PreferenceChangeListener;
+
 import android.content.ContentResolver;
 import android.content.res.Resources;
+import android.content.Context;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
@@ -58,6 +61,7 @@ import org.illusion.settings.Utils;
 
 public class ButtonSettings extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
 
+    private static final String CATEGORY_VOLUME = "button_volume_keys";
     private static final String CATEGORY_KEYS = "button_keys";
     private static final String CATEGORY_BACK = "button_keys_back";
     private static final String CATEGORY_HOME = "button_keys_home";
@@ -129,6 +133,20 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
         final PreferenceScreen prefScreen = getPreferenceScreen();
         final Resources res = getResources();
 
+        final PreferenceCategory volumeCategory =
+                (PreferenceCategory) prefScreen.findPreference(CATEGORY_VOLUME);
+
+	if (hasVolumeRocker()) {
+	     mVolumeKeyCursorControl = (ListPreference) findPreference(VOLUME_KEY_CURSOR_CONTROL);
+             if(mVolumeKeyCursorControl != null) {
+                 mVolumeKeyCursorControl.setValue(Integer.toString(Settings.System.getInt(resolver, Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0)));
+                 mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntry());
+                 mVolumeKeyCursorControl.setOnPreferenceChangeListener(this);
+               	 }
+          } else {
+            prefScreen.removePreference(volumeCategory);
+        }
+
         final int deviceKeys = getResources().getInteger(
                 com.android.internal.R.integer.config_deviceHardwareKeys);
         final boolean hasBackKey = (deviceKeys & KEY_MASK_BACK) != 0;
@@ -149,7 +167,7 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_ASSIST);
         final PreferenceCategory keysAppSwitchCategory =
                 (PreferenceCategory) prefScreen.findPreference(CATEGORY_APPSWITCH);
-	final PreferenceCategory headsethookCategory = 
+	 final PreferenceCategory headsethookCategory = 
 		  (PreferenceCategory) prefScreen.findPreference(CATEGORY_HEADSETHOOK);
 
 
@@ -330,15 +348,9 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
                     Settings.System.HARDWARE_KEY_REBINDING, 0) == 1));
 		    mEnableCustomBindings.setOnPreferenceChangeListener(this);
         }
+
       	     mHeadsetHookLaunchVoice = (CheckBoxPreference) findPreference(BUTTON_HEADSETHOOK_LAUNCH_VOICE);
             mHeadsetHookLaunchVoice.setChecked(Settings.System.getInt(resolver,Settings.System.HEADSETHOOK_LAUNCH_VOICE, 1) == 1);
-
-	     mVolumeKeyCursorControl = (ListPreference) findPreference(VOLUME_KEY_CURSOR_CONTROL);
-             if(mVolumeKeyCursorControl != null) {
-                 mVolumeKeyCursorControl.setValue(Integer.toString(Settings.System.getInt(resolver, Settings.System.VOLUME_KEY_CURSOR_CONTROL, 0)));
-                 mVolumeKeyCursorControl.setSummary(mVolumeKeyCursorControl.getEntry());
-                 mVolumeKeyCursorControl.setOnPreferenceChangeListener(this);
-             }
     }
 
     @Override
@@ -479,6 +491,10 @@ public class ButtonSettings extends SettingsPreferenceFragment implements OnPref
              return true;
 	}
         return false;
+    }
+
+	private boolean hasVolumeRocker() {
+        return getActivity().getResources().getBoolean(R.bool.config_has_volume_rocker);
     }
    
     private boolean hasHomeKey() {

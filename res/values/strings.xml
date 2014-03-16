@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Illusion Settings</string>
+    <string name="general_settings">General UI</string>
     <string name="title_generalui">General UI</string>
     <string name="ok">OK</string>
     
@@ -8,6 +9,11 @@
     <!-- Share to clipboard -->
     <string name="clipboard_notification">Copied to clipboard</string>
     <string name="title_clipboard_share">Copy to clipboard</string>
+
+    <!-- Power Menu Options-->
+    <string name="bars_and_menus_category_power_menu_title">Power menu</string>
+    <string name="power_menu_toggle_screenshot_title">Show Screenshot</string>
+    <string name="power_menu_toggle_screenshot_summary">Tick or untick to show/hide screenshot option in Power Menu</string>
 
     <!-- Status Bar -->
     <string name="bars_settings">Bars Settings</string>
