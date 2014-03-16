@@ -14,6 +14,9 @@
     <string name="bars_and_menus_category_power_menu_title">Power menu</string>
     <string name="power_menu_toggle_screenshot_title">Show Screenshot</string>
     <string name="power_menu_toggle_screenshot_summary">Tick or untick to show/hide screenshot option in Power Menu</string>
+    <string name="power_menu_toggle_screenrecord_title">Screen Record</string>
+    <string name="power_menu_onthego_title">On-The-Go Mode</string>
+    <string name="power_menu_toggle_screenrecord_summary">Show screen Record option in Power Menu</string>
 
     <!-- Status Bar -->
     <string name="bars_settings">Bars Settings</string>
