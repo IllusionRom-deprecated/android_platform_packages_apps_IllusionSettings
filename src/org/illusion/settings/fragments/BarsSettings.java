@@ -46,6 +46,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     
     private static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
     private static final String QUICK_PULLDOWN = "quick_pulldown";
+    private static final String QUICKSETTINGS_DYNAMIC = "quicksettings_dynamic_row";
     private static final String STATUS_BAR_TRAFFIC = "status_bar_traffic";
     private static final String STATUS_BAR_CUSTOM_HEADER = "custom_status_bar_header";
     private static final String SMART_PULLDOWN = "smart_pulldown";
@@ -60,6 +61,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private ListPreference mSmartPulldown;
     private CheckBoxPreference mStatusBarTraffic;
     private CheckBoxPreference mStatusBarCustomHeader;
+    private CheckBoxPreference mQuickSettingsDynamic;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,24 +74,24 @@ public class BarsSettings extends SettingsPreferenceFragment implements
         mStatusBarBrightnessControl.setChecked((Settings.System.getInt(resolver,Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0) == 1));
         mStatusBarBrightnessControl.setOnPreferenceChangeListener(this);
         mQuickPulldown = (ListPreference) findPreference(QUICK_PULLDOWN);
-                mSmartPulldown = (ListPreference) findPreference(SMART_PULLDOWN);
+        mSmartPulldown = (ListPreference) findPreference(SMART_PULLDOWN);
 
-        if (isPhone(getActivity())) {
-            int quickPulldown = Settings.System.getInt(resolver,
-                    Settings.System.QS_QUICK_PULLDOWN, 0);
-            mQuickPulldown.setValue(String.valueOf(quickPulldown));
-            updateQuickPulldownSummary(quickPulldown);
-            mQuickPulldown.setOnPreferenceChangeListener(this);
+        int quickPulldown = Settings.System.getInt(resolver,
+        Settings.System.QS_QUICK_PULLDOWN, 0);
+        mQuickPulldown.setValue(String.valueOf(quickPulldown));
+        updateQuickPulldownSummary(quickPulldown);
+        mQuickPulldown.setOnPreferenceChangeListener(this);
 
-            int smartPulldown = Settings.System.getInt(resolver,
-                    Settings.System.QS_SMART_PULLDOWN, 0);
-            mSmartPulldown.setValue(String.valueOf(smartPulldown));
-            updateSmartPulldownSummary(smartPulldown);
-            mSmartPulldown.setOnPreferenceChangeListener(this);
-        } else {
-            prefSet.removePreference(mQuickPulldown);
-            prefSet.removePreference(mSmartPulldown);
-        }
+        int smartPulldown = Settings.System.getInt(resolver,
+        Settings.System.QS_SMART_PULLDOWN, 0);
+        mSmartPulldown.setValue(String.valueOf(smartPulldown));
+        updateSmartPulldownSummary(smartPulldown);
+        mSmartPulldown.setOnPreferenceChangeListener(this);
+
+        mQuickSettingsDynamic = (CheckBoxPreference) prefSet.findPreference(QUICKSETTINGS_DYNAMIC);
+        mQuickSettingsDynamic.setChecked(Settings.System.getInt(resolver,
+            Settings.System.QUICK_SETTINGS_TILES_ROW, 1) != 0);
+        mQuickSettingsDynamic.setOnPreferenceChangeListener(this);
 
          try {
              if (Settings.System.getInt(getActivity().getApplicationContext().getContentResolver(),
@@ -120,7 +122,11 @@ public class BarsSettings extends SettingsPreferenceFragment implements
 		      int quickPulldown = Integer.valueOf((String) objValue);	
                     Settings.System.putInt(resolver,Settings.System.QS_QUICK_PULLDOWN, quickPulldown);
 			updateQuickPulldownSummary(quickPulldown);
-        } else if (preference == mSmartPulldown) {
+              } else if (preference == mQuickSettingsDynamic) {
+ 	              boolean value = (Boolean) objValue;
+                     Settings.System.putInt(resolver,
+                     Settings.System.QUICK_SETTINGS_TILES_ROW, value ? 1 : 0);
+              } else if (preference == mSmartPulldown) {
              		int smartPulldown = Integer.valueOf((String) objValue);
              		Settings.System.putInt(resolver, Settings.System.QS_SMART_PULLDOWN, smartPulldown);
   		       updateSmartPulldownSummary(smartPulldown);

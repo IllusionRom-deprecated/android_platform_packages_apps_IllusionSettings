@@ -92,10 +92,14 @@
     <string name="smart_pulldown_dismissable">Pulldown if there are no cleareable notifications</string>
     <string name="smart_pulldown_persistent">Pulldown if there are no notifications</string>
 
+    <!-- QuickSettings: Dynamic Row -->
+    <string name="qs_configurable_title">QuickSettings configurable</string>
+    <string name="qs_configurable_summary">Enable/disable dynamic row changes</string>
+
     <!-- Cursor control -->
-   <string name="volume_key_cursor_control_title">Cursor control</string>
-   <string name="volume_key_cursor_control_on">Left/right</string>
-   <string name="volume_key_cursor_control_on_reverse">Right/left</string>
-   <string name="disabled">Disabled</string>
+    <string name="volume_key_cursor_control_title">Cursor control</string>
+    <string name="volume_key_cursor_control_on">Left/right</string>
+    <string name="volume_key_cursor_control_on_reverse">Right/left</string>
+    <string name="disabled">Disabled</string>
 
 </resources>
